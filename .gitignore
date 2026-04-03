@@ -5,4 +5,4 @@ node_modules/
 build/
 coverage/
 *.tmp.env
-.env
+.env.env
