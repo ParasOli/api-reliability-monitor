@@ -1,12 +1,9 @@
 require("dotenv").config();
 
-// Node 18+ has fetch built-in
-const BASE_URL = "https://jsonplacehosddlder.typicode.com";
+const BASE_URL = "https://jsonplaceholder.typicode.com/posts";
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 
-// -------------------------
-// Logging utility
-// -------------------------
+
 function log(level, message, data = null) {
   const timestamp = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
   const prefix = { info: "🔹", success: "✅", error: "❌", warn: "⚠️" }[level] || "•";
@@ -18,9 +15,7 @@ function log(level, message, data = null) {
   }
 }
 
-// -------------------------
-// Slack alert function
-// -------------------------
+
 async function sendSlackAlert({ endpoint, error, responseTime, attemptCount }) {
   if (!SLACK_WEBHOOK_URL) {
     log("warn", "SLACK_WEBHOOK_URL not set — skipping Slack alert");
@@ -65,9 +60,6 @@ async function sendSlackAlert({ endpoint, error, responseTime, attemptCount }) {
   }
 }
 
-// -------------------------
-// Check a single endpoint
-// -------------------------
 async function checkEndpoint(endpoint, responseTimes) {
   log("info", `Checking ${endpoint}...`);
   const start = Date.now();
@@ -84,12 +76,10 @@ async function checkEndpoint(endpoint, responseTimes) {
   log("success", `${endpoint} OK (${duration}ms)`);
 }
 
-// -------------------------
-// Run the check for all endpoints
-// -------------------------
+
 async function runCheck() {
   const responseTimes = {};
-  const endpoints = ["/posts", "/users"]; // add more endpoints here
+  const endpoints = ["/posts", "/users"]; 
 
   for (const endpoint of endpoints) {
     await checkEndpoint(endpoint, responseTimes);
@@ -98,9 +88,6 @@ async function runCheck() {
   return responseTimes;
 }
 
-// -------------------------
-// Monitor with retry + alert
-// -------------------------
 async function monitor() {
   log("info", "Starting API Reliability Monitor...");
 
@@ -114,7 +101,7 @@ async function monitor() {
     log("warn", `Attempt ${attempt} failed: ${err.message}`);
     attempt++;
 
-    await new Promise((r) => setTimeout(r, 5000)); // wait 5 seconds before retry
+    await new Promise((r) => setTimeout(r, 5000)); 
 
     try {
       responseTimes = await runCheck();
@@ -133,8 +120,4 @@ async function monitor() {
     }
   }
 }
-
-// -------------------------
-// Start monitoring
-// -------------------------
 monitor();

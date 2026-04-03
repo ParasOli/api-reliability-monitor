@@ -30,4 +30,4 @@ jobs:
       - name: Run API monitor
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        run: node monitor.js
+        run: node scripts/monitor.js
