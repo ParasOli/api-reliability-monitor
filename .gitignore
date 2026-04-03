@@ -6,3 +6,4 @@ build/
 coverage/
 *.tmp.env
 .env.env
+.env
