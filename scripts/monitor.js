@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const BASE_URL = "https://jsonplaceholder.typicode.com/posts";
+const BASE_URL = "https://jsonplaceholder.typicode.com";
 const SLACK_WEBHOOK_URL = process.env.SLACK_WEBHOOK_URL;
 
 
