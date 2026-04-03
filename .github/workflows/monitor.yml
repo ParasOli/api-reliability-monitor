@@ -1,7 +1,6 @@
 name: API Reliability Monitor
 
 on:
-  schedule:
   workflow_dispatch:         # allows manual trigger
 
 jobs:
